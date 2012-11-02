@@ -43,7 +43,24 @@ public abstract class GameController {
     }
 
     private boolean checkThatSelectedCardsFormASet() {
-        return false;
+    	Card card1 = selectedCards.get(0);
+    	Card card2 = selectedCards.get(1);
+    	Card card3 = selectedCards.get(2);
+    	if(!(card1.getColor() == card2.getColor() && card1.getColor() == card3.getColor()) && !(card1.getColor() != card2.getColor() && card1.getColor() != card3.getColor() && card2.getColor() != card3.getColor())) {
+    		return false;
+    	}
+    	else if(!(card1.getNumberOf() == card2.getNumberOf() && card1.getNumberOf() == card3.getNumberOf()) && !(card1.getNumberOf() != card2.getNumberOf() && card1.getNumberOf() != card3.getNumberOf() && card2.getNumberOf() != card3.getNumberOf())) {
+    		return false;
+    	}
+    	else if(!(card1.getShape() == card2.getShape() && card1.getShape() == card3.getShape()) && !(card1.getShape() != card2.getShape() && card1.getShape() != card3.getShape() && card2.getShape() != card3.getShape())) {
+    		return false;
+    	}
+    	else if(!(card1.getPattern() == card2.getPattern() && card1.getPattern() == card3.getPattern()) && !(card1.getPattern() != card2.getPattern() && card1.getPattern() != card3.getPattern() && card2.getPattern() != card3.getPattern())) {
+    		return false;
+    	}
+    	else {
+    		return true;
+    	} 
     }
 
     private void deselectAllSelectedCards() {
