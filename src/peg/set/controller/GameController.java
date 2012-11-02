@@ -15,20 +15,34 @@ import peg.set.GameBoard;
  */
 public abstract class GameController {
 
+    public static final int CARDS_IN_A_SET = 3;
     private GameBoard gameboard;
     private List<Card> selectedCards;
+    private int correctSets;
 
     public void initGameBoard() {
     }
 
+    public void select(Card card) {
+        selectedCards.add(card);
+        gameboard.select(card);
+        if (selectedCards.size() == CARDS_IN_A_SET) {
+            submitSelectedCards();
+        }
+    }
+
     private void submitSelectedCards() {
-        if (checkSelectedCards()) {
-            
+        if (checkThatSelectedCardsFormASet()) {
+            handleCorrectSelection();
         }
         deselectAllSelectedCards();
     }
 
-    private boolean checkSelectedCards() {
+    private void handleCorrectSelection() {
+        correctSets++;
+    }
+
+    private boolean checkThatSelectedCardsFormASet() {
         return false;
     }
 
@@ -39,13 +53,6 @@ public abstract class GameController {
         }
     }
 
-    public void select(Card card) {
-        selectedCards.add(card);
-        if (selectedCards.size() == 3) {
-            submitSelectedCards();
-        }
-    }
-    
     public void deselect(Card card) {
         gameboard.deselect(card);
         selectedCards.remove(card);
