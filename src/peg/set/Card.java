@@ -6,7 +6,7 @@ package peg.set;
 
 /**
  *
- * @author thinner
+ * @author HANANANANANA
  */
 public class Card {
     
