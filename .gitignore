@@ -4,3 +4,8 @@ build.xml
 local.properties
 proguard-project.txt
 project.properties
+gen/
+proguard.cfg
+.classpath
+.project
+default.properties
