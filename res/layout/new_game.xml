@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:orientation="vertical">
+    <TextView android:layout_height="wrap_content" android:text="Choose difficulty" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_marginLeft="20dip" android:layout_marginTop="30dip"></TextView>
+    <RadioGroup
+        android:id="@+id/ChooseDifficultyGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton android:layout_height="wrap_content" android:id="@+id/radioButton1" android:text="Easy (2 variables)" android:layout_width="wrap_content" android:layout_gravity="left" android:layout_marginLeft="20dip" android:layout_marginTop="10dip"></RadioButton>
+        <RadioButton android:layout_height="wrap_content" android:id="@+id/radioButton2" android:layout_width="wrap_content" android:text="Medium (3 variables)" android:layout_gravity="left" android:layout_marginLeft="20dip"></RadioButton>
+        <RadioButton android:layout_height="wrap_content" android:id="@+id/radioButton3" android:layout_width="wrap_content" android:text="Hard (4 variables)" android:layout_gravity="left" android:layout_marginLeft="20dip"></RadioButton>
+    </RadioGroup>
+    <Button android:layout_height="wrap_content" android:text="Limited Time Game" android:id="@+id/button1" android:layout_gravity="center" android:layout_marginTop="50dip" android:layout_marginBottom="20dip" android:onClick="startLimitedTimeGame" android:layout_width="200dp"></Button>
+    <Button android:layout_height="wrap_content" android:text="Limited Sets Game" android:id="@+id/Button01" android:layout_gravity="center" android:layout_width="200dp" android:onClick="startLimitedSetsGame"></Button>
+    
+</LinearLayout>
