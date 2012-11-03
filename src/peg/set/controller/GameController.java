@@ -35,12 +35,14 @@ public abstract class GameController {
     private void submitSelectedCards() {
         if (checkThatSelectedCardsFormASet()) {
             handleCorrectSelection();
+        } else {
+            deselectAllSelectedCards();
         }
-        deselectAllSelectedCards();
     }
 
     private void handleCorrectSelection() {
         correctSets++;
+        deselectAndRemoveAllSelectedCards();
     }
 
     private boolean checkThatSelectedCardsFormASet() {
@@ -69,6 +71,15 @@ public abstract class GameController {
 
     public void deselect(Card card) {
         selectedCards.remove(card);
+    }
+
+    private void deselectAndRemoveAllSelectedCards() {
+        Iterator<Card> iterator = selectedCards.iterator();
+        while (iterator.hasNext()) {
+            Card card = iterator.next();
+            gameboard.remove(card);
+            deselect(card);
+        }
     }
 
     public void addNewCards() {
