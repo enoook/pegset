@@ -58,12 +58,6 @@ public class GameBoard extends TableLayout implements OnClickListener {
             }
         }
     }
-
-    public void select(Card card) {
-    }
-
-    public void deselect(Card card) {
-    }
     
     public void add(Card card) {
     	
