@@ -38,6 +38,10 @@ public class GameBoard extends View{
         
     }
     
+    public void add(Card card) {
+    	
+    }
+    
     private Bitmap getOrCreateCardImage(Card card) {
         Bitmap image = cardImageCache.get(card.getPropertyString());
         if(image == null) {
@@ -50,6 +54,10 @@ public class GameBoard extends View{
         Bitmap image = BitmapFactory.decodeFile(card.getPropertyString() + ".png");
         cardImageCache.put(card.getPropertyString(), image);
         return image;
+    }
+    
+    public List<Card> getCards() {
+    	return cards;
     }
 
     @Override
