@@ -41,4 +41,8 @@ public class Card {
     public PATTERN getPattern() {
     	return pattern;
     }
+    
+    public String getPropertyString() {
+        return "card" + shape + numberOf + color + pattern;
+    }
 }
