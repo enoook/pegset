@@ -64,7 +64,11 @@ public class GameBoard extends TableLayout implements OnClickListener {
 
     public void deselect(Card card) {
     }
-
+    
+    public void add(Card card) {
+    	
+    }
+    
     private Bitmap getOrCreateCardImage(Card card) {
         Bitmap image = cardImageCache.get(card.getPropertyString());
         if (image == null) {
