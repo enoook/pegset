@@ -7,36 +7,62 @@ package peg.set;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
+import android.graphics.Point;
 import android.view.View;
-import java.util.List;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import java.util.Map;
+import peg.set.controller.GameController;
 
 /**
  *
  * @author thinner
  */
-public class GameBoard extends View {
+public class GameBoard extends TableLayout implements OnClickListener {
 
-    public static final int CARDS_PER_COLUMN = 3;
+    public static final int CARDS_IN_A_COLUMN = 3;
     public static final int CARD_WIDTH_IN_PIXELS = 40;
     public static final int CARD_HEIGHT_IN_PIXELS = (int) Math.round(40 / 1.618);
-    private int verticalSpaceBetweenCards;
-    private int horizontalSpaceBetweenCards;
-    private List<Card> cards;
-    private List<Card> selectedCards;
+    private Map<Point, Button> buttonPositions;
     private Map<String, Bitmap> cardImageCache;
-
+    private GameController controller;
+    
     public GameBoard(Context context) {
         super(context);
     }
 
+    private void layout(Context context) {
+        TableLayout.LayoutParams lp = new TableLayout.LayoutParams(
+                TableLayout.LayoutParams.FILL_PARENT,
+                TableLayout.LayoutParams.FILL_PARENT);
+        this.setLayoutParams(lp);
+
+        int numberOfCardsInRow = 0, numberOfRows = 0;
+        TableRow row = new TableRow(context);
+        for (int i = 0; i < 12; i++) {
+            Button button = new Button(context);
+            button.setOnClickListener(this);
+            Point pos = new Point(numberOfCardsInRow, numberOfRows);
+            button.setTag(0, null);
+            button.setTag(1, pos);
+            
+            buttonPositions.put(pos, button);
+            
+            row.addView(button);
+            if (++numberOfCardsInRow == CARDS_IN_A_COLUMN) {
+                numberOfRows++;
+                this.addView(row);
+                row = new TableRow(context);
+            }
+        }
+    }
+
     public void select(Card card) {
-        selectedCards.add(card);
     }
 
     public void deselect(Card card) {
-        selectedCards.remove(card);
     }
 
     private Bitmap getOrCreateCardImage(Card card) {
@@ -61,26 +87,15 @@ public class GameBoard extends View {
         cardImageCache.put(card.getPropertyString(), image);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        
-        int cardImageXCoord = 0, cardImageYCoord = 0;
-        int columnToDrawIn = 0;
-        for (Card card : cards) {
-            canvas.drawBitmap(getOrCreateCardImage(card), cardImageXCoord, cardImageYCoord, null);
-            if (selectedCards.contains(card)) {
-
-            }
-            
-            if (++columnToDrawIn == CARDS_PER_COLUMN) {
-                columnToDrawIn = 0;
-                cardImageXCoord = 0;
-                cardImageYCoord += verticalSpaceBetweenCards + CARD_HEIGHT_IN_PIXELS;
-            } else {
-                cardImageXCoord += horizontalSpaceBetweenCards + CARD_WIDTH_IN_PIXELS;
-            }
+    public void onClick(View button) {
+        if(button.getTag(0) == null) {
+            button.setTag(0, this);
+            button.setBackgroundColor(0xFF09cdda);
+            controller.select(null);
+        } else {
+            button.setTag(0, null);
+            button.setBackgroundColor(0xFFFFFFFF);
+            controller.deselect(null);
         }
     }
 }
