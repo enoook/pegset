@@ -83,6 +83,7 @@ public abstract class GameController {
     }
 
     public void addNewCards() {
+        selectedCards.clear();// Unsafe as it is not synced with GameBoard
         for (int i = 0; i < cards.size() - 2; i++) {
             for (int j = i + 1; j < cards.size() - 1; j++) {
                 for (int k = j + 1; k < cards.size(); k++) {
@@ -93,22 +94,26 @@ public abstract class GameController {
                     if (checkThatSelectedCardsFormASet()) {
                         selectedCards.clear();
                         for (int l = 0; l < CARDS_IN_A_SET; l++) {
-                            gameboard.add(Card.createRandomizedCard());
+                            Card newCard = Card.createRandomizedCard();
+                            cards.add(newCard);
+                            gameboard.add(newCard);
                         }
                         return;
                     }
                 }
             }
         }
-        selectedCards.clear();
+
         Random random = new Random();
         Card randomCard1 = cards.get(random.nextInt(cards.size()));
         cards.remove(randomCard1);
         Card randomCard2 = cards.get(random.nextInt(cards.size()));
         cards.add(randomCard1);
 
-        //TODO
-        //What happens if no set is found
+        Card newCard = Card.createSet(randomCard1, randomCard2);
+        cards.add(newCard);
+        gameboard.add(newCard);
+
         selectedCards.clear();
     }
 }
