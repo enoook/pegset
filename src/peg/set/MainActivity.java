@@ -12,4 +12,24 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
+    
+    public void showNewGameMenu() {
+    	
+    }
+    
+    public void showHighscore() {
+    	
+    }
+    
+    public void quitGame() {
+    	
+    }
+    
+    public void startLimitedTimeGame() {
+    	
+    }
+    
+    public void startLimitedSetsGame() {
+    	
+    }
 }
