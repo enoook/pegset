@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package peg.set;
-import java.util.EnumMap;
 import java.util.Random;
 
 /**
@@ -11,28 +10,24 @@ import java.util.Random;
  * @author HANANANANANA
  */
 public class Card {
-    public static enum SHAPE {TRIANGLE, SQUARE, CIRCLE};
-    public static enum NUMBER_OF {ONE, TWO, THREE};
-    public static enum COLOR {PINK, PURPLE, ORANGE};
-    public static enum PATTERN {BLANK, FULL, HALF};
-    
-    private SHAPE shape;
-    private NUMBER_OF numberOf;
-    private COLOR color;
-    private PATTERN pattern;
+   
+    private CardProperty.ShapeProperty shape;
+    private CardProperty.QuantityProperty quantity;
+    private CardProperty.ColorProperty color;
+    private CardProperty.PatternProperty pattern;
     
     public static Card createRandomizedCard() {
     	Random random = new Random();
     	SHAPE shape = SHAPE.values()[random.nextInt(3)];
-    	NUMBER_OF numberOf = NUMBER_OF.values()[random.nextInt(3)];
+    	QUANTITY quantity = QUANTITY.values()[random.nextInt(3)];
     	COLOR color = COLOR.values()[random.nextInt(3)];
     	PATTERN pattern = PATTERN.values()[random.nextInt(3)];
-    	return new Card(shape, numberOf, color, pattern);
+    	return new Card(shape, quantity, color, pattern);
     }
     
     public static Card createSet(Card card1, Card card2) {
     	SHAPE s;
-    	NUMBER_OF n;
+    	QUANTITY q;
     	COLOR c;
     	PATTERN p;
     	if (card1.shape == card2.shape) {
@@ -49,18 +44,18 @@ public class Card {
     			s = SHAPE.values()[2];
     		}
     	} 
-    	if (card1.numberOf == card2.numberOf) {
-    		n = card1.numberOf;
+    	if (card1.quantity == card2.quantity) {
+    		q = card1.quantity;
     	}
     	else {
-    		if (card1.numberOf.ordinal() != 0 && card2.numberOf.ordinal() != 0) {
-    			n = NUMBER_OF.values()[0];
+    		if (card1.quantity.ordinal() != 0 && card2.quantity.ordinal() != 0) {
+    			q = QUANTITY.values()[0];
     		}
-    		else if (card1.numberOf.ordinal() != 1 && card2.numberOf.ordinal() != 1) {
-    			n = NUMBER_OF.values()[1];
+    		else if (card1.quantity.ordinal() != 1 && card2.quantity.ordinal() != 1) {
+    			q = QUANTITY.values()[1];
     		}
     		else {
-    			n = NUMBER_OF.values()[2];
+    			q = QUANTITY.values()[2];
     		}
     	}
     	if (card1.color == card2.color) {
@@ -91,33 +86,33 @@ public class Card {
     			p = PATTERN.values()[2];
     		}
     	}
-    	return new Card(s, n, c, p);
+    	return new Card(s, q, c, p);
     }
     
-    public Card(SHAPE shape, NUMBER_OF numberOf, COLOR color, PATTERN pattern) {
+    public Card(CardProperty.ShapeProperty shape, CardProperty.QuantityProperty quantity, CardProperty.ColorProperty color, CardProperty.PatternProperty pattern) {
     	this.shape = shape;
-    	this.numberOf = numberOf;
+    	this.quantity = quantity;
     	this.color = color;
     	this.pattern = pattern;
     }
     
-    public SHAPE getShape() {
+    public CardProperty.ShapeProperty getShape() {
     	return shape;
     }
     
-    public NUMBER_OF getNumberOf() {
-    	return numberOf;
+    public CardProperty.QuantityProperty getQuantity() {
+    	return quantity;
     }
     
-    public COLOR getColor() {
+    public CardProperty.ColorProperty getColor() {
     	return color;
     }
     
-    public PATTERN getPattern() {
+    public CardProperty.PatternProperty getPattern() {
     	return pattern;
     }
     
     public String getPropertyString() {
-        return "card" + shape + numberOf + color + pattern;
+        return "card" + shape + quantity + color + pattern;
     }
 }

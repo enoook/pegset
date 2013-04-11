@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package peg.set.controller;
 
 import java.util.Iterator;
@@ -14,15 +10,27 @@ import peg.set.GameBoard;
  *
  * @author thinner
  */
-public abstract class GameController {
+public class GameController {
 
     public static final int CARDS_IN_A_SET = 3;
+    private GameWinConditionHandler winConditionHandler;
     private GameBoard gameboard;
     private List<Card> selectedCards;
     private List<Card> cards;
-    private int correctSets;
+    private int numberOfSetsFound;
+    
+    public GameController(GameWinConditionHandler winConditionHandler) {
+        this.winConditionHandler = winConditionHandler;
+        this.winConditionHandler.registerController(this);
+    }
 
     public void initGameBoard() {
+        
+        this.winConditionHandler.gameStarted();
+    }
+    
+    public int getNumberOfSetsFound() {
+        return numberOfSetsFound;
     }
 
     public void select(Card card) {
@@ -33,7 +41,7 @@ public abstract class GameController {
     }
 
     private void submitSelectedCards() {
-        if (checkThatSelectedCardsFormASet()) {
+        if (selectedCardsFormASet()) {
             handleCorrectSelection();
         } else {
             deselectAllSelectedCards();
@@ -41,17 +49,18 @@ public abstract class GameController {
     }
 
     private void handleCorrectSelection() {
-        correctSets++;
+        numberOfSetsFound++;
+        winConditionHandler.selectionWasCorrect();
         deselectAndRemoveAllSelectedCards();
     }
 
-    private boolean checkThatSelectedCardsFormASet() {
+    private boolean selectedCardsFormASet() {
         Card card1 = selectedCards.get(0);
         Card card2 = selectedCards.get(1);
         Card card3 = selectedCards.get(2);
         if (!(card1.getColor() == card2.getColor() && card1.getColor() == card3.getColor()) && !(card1.getColor() != card2.getColor() && card1.getColor() != card3.getColor() && card2.getColor() != card3.getColor())) {
             return false;
-        } else if (!(card1.getNumberOf() == card2.getNumberOf() && card1.getNumberOf() == card3.getNumberOf()) && !(card1.getNumberOf() != card2.getNumberOf() && card1.getNumberOf() != card3.getNumberOf() && card2.getNumberOf() != card3.getNumberOf())) {
+        } else if (!(card1.getQuantity() == card2.getQuantity() && card1.getQuantity() == card3.getQuantity()) && !(card1.getQuantity() != card2.getQuantity() && card1.getQuantity() != card3.getQuantity() && card2.getQuantity() != card3.getQuantity())) {
             return false;
         } else if (!(card1.getShape() == card2.getShape() && card1.getShape() == card3.getShape()) && !(card1.getShape() != card2.getShape() && card1.getShape() != card3.getShape() && card2.getShape() != card3.getShape())) {
             return false;
@@ -91,7 +100,7 @@ public abstract class GameController {
                     selectedCards.add(cards.get(j));
                     selectedCards.add(cards.get(k));
 
-                    if (checkThatSelectedCardsFormASet()) {
+                    if (selectedCardsFormASet()) {
                         selectedCards.clear();
                         for (int l = 0; l < CARDS_IN_A_SET; l++) {
                             Card newCard = Card.createRandomizedCard();
@@ -115,5 +124,9 @@ public abstract class GameController {
         gameboard.add(newCard);
 
         selectedCards.clear();
+    }
+    
+    public void endGame() {
+        
     }
 }
