@@ -1,10 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package peg.set;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +12,6 @@ public abstract class CardProperty {
 
     private static final Random randomizer = new Random();
     private int index;
-    private String[] names;
     
     protected CardProperty(Integer index) {
         this.index = index;
